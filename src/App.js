@@ -6,7 +6,9 @@ function App () {
   const resultNumber = 8
   const resultList = []
   const [result, setResult] = useState([])
+  const [loading, setLoading] = useState(false)
   const handleData = async () => {
+    setLoading(true)
     for (let i = 0; i < resultNumber; i++) {
       await fetch('https://random.dog/woof.json')
         .then((response) => response.json())
@@ -14,18 +16,28 @@ function App () {
           Object.assign(data, { id: i })
           resultList.push(data)
         })
+        .catch((error) => {
+          setLoading(false)
+          console.log(error)
+        })
     }
+    setLoading(false)
     setResult(resultList)
   }
   useEffect(() => {
     handleData()
-    console.log(result)
   }, [])
   const clickHandler = () => {
     window.location.reload()
   }
   return (
     <>
+      {loading ? (
+        <div className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-4" role="alert">
+          <p className="font-bold">Loading ...</p>
+          <p className="text-sm">Please wait for a second.</p>
+        </div>
+      ) : <div></div>}
       <div className='grid grid-cols-1 md:grid-cols-4 gap-4 place-items-center py-4 px-4'>
         {result && result.map(item => {
           return (

@@ -2,7 +2,7 @@
 
 ## Requirement
 
-The app should present 8 results on the screen.
+The app should present 8 results on the screen using API https://random.dog/woof.json .
 
 The app should be responsive:
 
