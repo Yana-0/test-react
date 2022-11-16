@@ -13,8 +13,13 @@ function App () {
       await fetch('https://random.dog/woof.json')
         .then((response) => response.json())
         .then((data) => {
-          Object.assign(data, { id: i })
-          resultList.push(data)
+          let url = data.url.slice(-3)
+          if (url === 'mp4' || url === 'jpg' || url === 'gif' || url === 'png') {
+            Object.assign(data, { id: i })
+            resultList.push(data)
+          } else {
+            i--
+          }
         })
         .catch((error) => {
           setLoading(false)
